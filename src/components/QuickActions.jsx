@@ -1,18 +1,41 @@
 import COLORS from "@/styles/COLORS";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import Button from "./Button";
 import Title from "./Title";
+import Modal from "./modal/Modal";
 
-const QuickActions = ({ isVertical = false, columnspan, rowspan }) => {
+import CreateAdmin from "./createAdmin/CreateAdmin";
+import CreateSession from "@/scenes/pages/session/create-session/CreateSession";
+import UpdateAdmin from "./updateAdmin/UpdateAdmin";
+import { StyledPrimaryButton } from "@/styles/globalStyledCompoents";
+
+const QuickActions = ({ isVertical = "no", columnspan, rspan }) => {
+  const [modal, setModal] = useState({ isModal: false, popup: "" });
+
+  const handleOpen = (popup) => {
+    setModal({ isModal: true, popup });
+  };
+
+  const handleClose = () => {
+    setModal({ isModal: false, window: "" });
+  };
+
   return (
-    <StyledQuickActions columnspan={columnspan} rowspan={rowspan}>
+    <StyledQuickActions columnspan={columnspan} rspan={rspan}>
+      <CreateAdmin isModal={modal.isModal} handleClose={handleClose} />
+
       <Title title="Quick actions" />
 
       <StyledButtonGroup vertical={isVertical}>
-        <Button text="Create Session"></Button>
-        <Button text="Create Admin"></Button>
-        <Button text="Session History"></Button>
+        <StyledPrimaryButton onClick={() => handleOpen("create session")}>
+          Create Session
+        </StyledPrimaryButton>
+        <StyledPrimaryButton onClick={() => handleOpen("create admin")}>
+          Create Admin
+        </StyledPrimaryButton>
+        <StyledPrimaryButton onClick={() => handleOpen("session history")}>
+          Session History
+        </StyledPrimaryButton>
       </StyledButtonGroup>
     </StyledQuickActions>
   );
@@ -24,7 +47,7 @@ const StyledQuickActions = styled.article`
   background-color: ${COLORS.primary};
   padding: 2rem 1rem;
   grid-column: ${(props) => props.columnspan};
-  grid-row: ${(props) => props.rowspan};
+  grid-row: ${(props) => props.rspan};
 `;
 
 const StyledButtonGroup = styled.div`
@@ -32,7 +55,7 @@ const StyledButtonGroup = styled.div`
   gap: 2rem;
   padding: 0 2rem;
   align-items: flex-start;
-  flex-direction: ${(props) => (props.vertical ? "column" : "row")};
+  flex-direction: ${(props) => (props.vertical === "yes" ? "column" : "row")};
 
   & > * {
     flex: 1;

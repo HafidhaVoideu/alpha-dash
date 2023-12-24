@@ -9,6 +9,7 @@ import COLORS from "../../styles/COLORS";
 import { StyledIconButton } from "@/styles/globalStyledCompoents";
 
 import { usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 // ***********************  icons *******************************
 
 import dashboard from "../../assets/dashboard.svg";
@@ -59,23 +60,26 @@ const sidebarLists = [dashboardList, sessionList, usersList, adminList];
 // Menu Item
 
 const MenuItem = ({ list, activeTab, handleActiveTab }) => {
-  const [isTabActive, setIsTabActive] = useState(false);
-  const [tab, setTab] = useState("/dashboard/overview");
+  const router = useRouter();
+  const [isActiveTab, setIsActiveTab] = useState(false);
 
   const pathname = usePathname();
   const { listItems, listName, icon, links } = list;
-  console.log("links", links[0]);
 
-  // useEffect(() => {
-  //   if (activeTab !== listName) setIsTabActive(false);
-  // }, [activeTab]);
+  // console.log("active List:", activeList);
+  useEffect(() => {
+    if (activeTab !== links[0]) setIsActiveTab(false);
+  }, [activeTab]);
 
   return (
     <StyledMenu>
       <StyledMenuHeader
+        isselected={activeTab === links[0]}
         onClick={() => {
-          // setIsTabActive(!isTabActive);
-          handleActiveTab(listName);
+          // router.push(links[0]);
+
+          handleActiveTab(links[0]);
+          setIsActiveTab(!isActiveTab);
         }}
       >
         <Image
@@ -89,12 +93,14 @@ const MenuItem = ({ list, activeTab, handleActiveTab }) => {
         <span>{listName}</span>
       </StyledMenuHeader>
 
-      <StyledList isvisible={activeTab === listName ? "show" : "hide"}>
+      <StyledList
+        isvisible={activeTab === links[0] && isActiveTab ? "show" : "hide"}
+      >
         {listItems.map((item, index) => (
           <StyledListItem
             key={index}
             onClick={() => {
-              handleActiveTab(listName);
+              // setActiveList(listName);
             }}
           >
             <Link
@@ -115,7 +121,7 @@ const MenuItem = ({ list, activeTab, handleActiveTab }) => {
 // SideBar
 
 const Sidebar = () => {
-  const [activeTab, setActiveTab] = useState();
+  const [activeTab, setActiveTab] = useState("/dashboard/overview");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   // const [set]
 
@@ -158,7 +164,6 @@ const Sidebar = () => {
                   height={24}
                   width={24}
                   alt={list.listName}
-                  priority={true}
                 />
               </StyledListItem>
             ))}
@@ -286,13 +291,15 @@ const StyledFooterDiv = styled.div`
   flex-direction: ${(props) => (props.sidebar === "open" ? "row" : "column")};
   align-items: center;
   gap: 2rem;
+
+  span {
+    display: ${(props) => (props.sidebar === "open" ? "block" : "none")};
+  }
 `;
 
 const StyledMenu = styled.div``;
 
 const StyledMenuHeader = styled.header`
-  background-color: ${COLORS.tertiary};
-  color: white;
   border-radius: 6px;
   font-weight: 500;
   text-transform: capitalize;
@@ -303,9 +310,24 @@ const StyledMenuHeader = styled.header`
   align-items: center;
   cursor: pointer;
 
+  color: ${(props) => (props.isselected ? props.isselected : "white")};
+  background-color: ${(props) =>
+    props.isselected ? "white" : COLORS.tertiary};
+  img {
+    filter: ${(props) =>
+      props.isselected
+        ? "invert(7%) sepia(9%) saturate(5590%) hue-rotate(177deg) brightness(35%) contrast(93%)"
+        : ""};
+  }
+
   &:hover {
     background-color: white;
+
     color: ${COLORS.primary};
+    img {
+      filter: invert(7%) sepia(9%) saturate(5590%) hue-rotate(177deg)
+        brightness(35%) contrast(93%);
+    }
   }
 `;
 

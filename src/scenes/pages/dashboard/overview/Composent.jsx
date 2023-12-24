@@ -1,9 +1,9 @@
 import Title from "@/components/Title";
 import COLORS from "@/styles/COLORS";
 import React, { useState } from "react";
-import Button from "@/components/Button";
 import styled from "styled-components";
 import SmallButton from "@/components/SmallButton";
+import { StyledPrimaryButton } from "@/styles/globalStyledCompoents";
 const Composent = () => {
   const [value, setValue] = useState();
   const handleSubmit = () => {
@@ -27,7 +27,8 @@ const Composent = () => {
             <SmallButton text="USD" key={i} />
           ))}
         </StyledContainer>
-        <Button type="submit" text="add"></Button>
+
+        <StyledPrimaryButton type="submit">add</StyledPrimaryButton>
       </StyledForm>
     </StyledComposent>
   );

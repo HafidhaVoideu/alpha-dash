@@ -3,10 +3,9 @@ import { IoIosCheckmark } from "react-icons/io";
 import React, { useState } from "react";
 import { IoIosArrowDown, IoIosArrowUp } from "react-icons/io";
 import styled from "styled-components";
-const Dropdown = ({ list }) => {
+const Dropdown = ({ list, ListName }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState("Fx-Market");
-  const dorpdownList = ["Fx-Market", "MMK", "FRWD"];
+  const [selectedItem, setSelectedItem] = useState("Market");
 
   return (
     <StyledSelectContainer>
@@ -19,7 +18,8 @@ const Dropdown = ({ list }) => {
 
       {isOpen && (
         <StyledSelect>
-          {dorpdownList.map((item, index) => (
+          <li>{ListName}</li>
+          {list.map((item, index) => (
             <li
               onClick={() => {
                 setSelectedItem(item);
@@ -75,6 +75,14 @@ export const StyledSelect = styled.ul`
       color: ${COLORS.dropdown};
       font-size: 24px;
     }
+  }
+
+  li:first-child:hover {
+    background-color: transparent;
+  }
+  li:first-child {
+    color: grey;
+    cursor: default;
   }
 
   li:hover {

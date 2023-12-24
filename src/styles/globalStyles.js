@@ -6,7 +6,8 @@ const GlobalStyle = createGlobalStyle`
 
 
 body{
-  background-color: ${COLORS.secondary}
+  background-color: ${COLORS.secondary};
+  letter-spacing: 0.06;
 
 }
 

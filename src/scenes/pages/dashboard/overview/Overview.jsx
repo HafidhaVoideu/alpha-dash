@@ -8,6 +8,8 @@ import BestMarket from "./BestMarket";
 import QuickActions from "@/components/QuickActions";
 import RecentTransaction from "./RecentTransaction";
 import Composent from "./Composent";
+import Modal from "@/components/modal/Modal";
+import StepperThree from "@/components/steppers/StepperThree";
 
 const Overview = () => {
   return (
@@ -16,7 +18,7 @@ const Overview = () => {
         <Info />
         <Sessions />
         <BestMarket />
-        <QuickActions columnspan="1/3" rowspan="3/4" />
+        <QuickActions columnspan="1/3" rspan="3/4" />
         <Composent />
         <RecentTransaction />
       </StyledOverview>

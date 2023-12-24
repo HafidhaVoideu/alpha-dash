@@ -7,3 +7,16 @@ export const TENORS = [
   { tenorId: 6, tenor: "9m", tenorDays: 270 },
   { tenorId: 7, tenor: "1y", tenorDays: 365 },
 ];
+
+export const MARKETS = ["Fx-Market", "MMK", "FRWD"];
+
+export const EMBEDED_MARKETS = [
+  {
+    listName: "FX",
+    list: ["Spot", "Forward", "Swap"],
+  },
+  {
+    listName: "MMK",
+    list: ["Deposit/Loan", "FRA"],
+  },
+];
